@@ -1,0 +1,118 @@
+server:
+  port: 15140
+  hostname: localhost
+  protocal: http
+
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mariadb://your-db-host:your-db-port/your-db-name?characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Seoul
+    username: your-id
+    password: your-pw
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        enable_lazy_load_no_trans: true
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  # cloud steam - kafka
+  #  cloud:
+  #    stream:
+  #      source: tokenDepisitBatchResponse
+  #      kafka:
+  #        binder:
+  #          brokers: localhost:18901
+  #          auto-add-partitions: true
+  #    bindings:
+  #      test11234:
+  #        content-type: application/json
+  #        producer:
+  #          partition-key-expression: headers['partitionKey']
+  #          partition-count: 3
+  # zipkin 설정
+  #  sleuth:
+  #    sampler:
+  #      probability: 1.0
+  #    enabled: true
+  #    propagation:
+  #      type: B3
+  #  zipkin:
+  #    port: 15905
+  #    base-url: ${server.protocal}://${server.hostname}:${spring.zipkin.port}
+  #    enabled: true
+  mvc:
+    log-request-details: true
+
+# kafka bootstrap / topic
+#kafka:
+#  bootstrapAddress: localhost:18901
+#  tokenDepisitBatchResponse:
+#    topic:
+#      name: tokenDepisitBatchResponse-in-0
+
+# kafka manager
+#management:
+#  endpoints:
+#    web:
+#      exposure.include: beans, env, health, info, metrics, mappings
+#  endpoint:
+#    health:
+#      show-details: always
+
+
+logging:
+  level:
+    io.naraplatform: debug
+    xyz.blocksmith: debug
+    jdbc.sqlonly: debug
+    org.springframework.web: debug
+    com.zaxxer.hikari.HikariDataSource: error
+    org.hibernate.type: trace
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    eureka-server-port: 15000
+    serviceUrl:
+      defaultZone: ${server.protocal}://${server.hostname}:${eureka.client.eureka-server-port}/eureka/
+
+security:
+  oauth2:
+    client:
+      client-id: maxClientId
+      client-secret: maxSecret
+    resource:
+      prefer-token-info: true
+      jwt:
+        key-value: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApTXcVZitK9H93MCscJMD
+          DtqLfhv53NemsyYERRRrX1sMh5oyxbjZ5w2Eqm3hGEhiGbT5d3pxXjAfd1ZTpu18
+          eLyB1iIKQ7VQV0/0XxnH5i8BrV+Kj6k7ywgb/1PPlc3o6nAhSr6d71pM6+LRKlzd
+          N5Dy2NUlsRd9ds594lUjChT51Tlbbkb9XK6UEB94LK5hNB86GwPkg7ZEEGLd/Qd3
+          QZWvEYNsjd4CZM6W57wni+X6tkRnq7eA/atRGGfIKqwul/hkBdj6FhrBPZ/CUxjV
+          8jLldDw2rhTmLNGJ++xcKhKRb/I+VlZrlQ1Jp7vwPHs3XLEYpK3hEGSgGfc+w4e8
+          pQIDAQAB
+          -----END PUBLIC KEY-----
+
+otp:
+  google-url: https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=
+  issuer: PROJECTNAME
+
+blockchain:
+  ethereum:
+    tokenContractAddress: "tokenContractAddress"
+    eventContractAddress: "eventContractAddress"
+    endPointNode: "https://ropsten.infura.io/v3/infuraKay"
+    corpPrivateKey: "pk"
+    decimals: 18
+    delegatorAddress: "delegatorAddress"

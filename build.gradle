@@ -1,0 +1,104 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id "org.springframework.boot" version "2.1.5.RELEASE"
+    id 'java'
+}
+
+group 'com.maxlength'
+version '1.0.0-SNAPSHOT'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "Greenwich.SR3")
+}
+
+dependencies {
+    compileOnly('org.projectlombok:lombok:1.18.6')
+    annotationProcessor('org.projectlombok:lombok:1.18.6')
+    implementation 'org.glassfish.jaxb:jaxb-runtime'
+
+    implementation "io.springfox:springfox-boot-starter:3.0.0"
+    implementation "io.springfox:springfox-swagger-ui:3.0.0"
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-data-rest:3.0.0'
+    implementation 'io.springfox:springfox-bean-validators:3.0.0'
+
+    // spring, boot
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure'
+
+    // spring cloud
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+//    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // spring support
+    compile('org.projectreactor:reactor-spring:1.0.1.RELEASE')
+    implementation 'javax.transaction:javax.transaction-api:1.3'
+    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.5'
+
+    // LIBS
+    implementation('org.apache.commons:commons-lang3:3.11')
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+    // TEST
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude module: 'junit'
+    }
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.5.1') {
+        exclude module: 'junit-platform-commons'
+    }
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.5.1')
+    testRuntimeOnly('org.junit.platform:junit-platform-engine:1.5.1')
+    testRuntimeOnly('org.junit.platform:junit-platform-commons:1.5.1')
+
+    // OTP
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.10'
+    implementation group: 'com.google.zxing', name: 'core', version: '3.3.0'
+    implementation group: 'de.taimos', name: 'totp', version: '1.0'
+
+    // Batch shedlock
+    implementation 'net.javacrumbs.shedlock:shedlock-spring:4.14.0'
+    implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:4.14.0'
+
+    // web3j
+    implementation group: 'org.web3j', name: 'core', version: '4.3.0'
+
+    // web3j contracts
+    implementation group: 'org.web3j', name: 'contracts', version: '5.0.0'
+
+    // okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+
+    // infura
+    compile group: 'org.web3j', name: 'infura', version: '4.2.0'
+
+    // QR code
+    implementation group: 'com.google.zxing', name: 'javase', version: '3.4.1'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2020.0.1"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: ethereum-server
+  messages:
+    basename: classpath:/i18n/messages/message,classpath:/i18n/errors/error
+    cache-duration: -1
+    encoding: UTF-8
